@@ -22,7 +22,9 @@ class Particle():
         fill(30, 209, 48)
         circle(self.x, self.y, self.thickness)
     
-    def check_interaction(self, p2): #Determine the force and verse of the force of gravity between 2 particles
+    def check_interaction(self, p2, show_interactions): #Determine the force and verse of the force of gravity between 2 particles
+        """ p2: instance of another particle
+            show_interactions: True to show, False to not show """
         m1 = self.mass
         m2 = p2.mass
         x1 = self.x
@@ -32,10 +34,10 @@ class Particle():
         print("x1: " + str(x1), "x2: " + str(x2), "y1: " + str(y1), "y2: " + str(y2))
         r = int(sqrt(((x2 - x1)**2) + ((y2 - y1)**2))) #Distance between the particles
         
-        #OPTIONAL --> SHOW THE INTERACTIONS -- uncomment to try
-        #if r < 100: #If distance is low show the distance
-            #stroke(110);
-            #line(x1, y1, x2, y2) #Line to visualize the distance of the interactions
+        #OPTIONAL --> SHOW THE INTERACTIONS 
+        if r < 100 and show_interactions: #If distance is low show the distance
+            stroke(110);
+            line(x1, y1, x2, y2) #Line to visualize the distance of the interactions
             
         #I now cut out all the interactions with r < 1 or r > 200 because they are not relevant
         #or cause problems
@@ -50,10 +52,11 @@ class Particle():
         
         
     def update(self):#Update the particle moovement
-        Vx = self.v.x + self.a.x #Speed x component + acceleration due to particles interactions
-        Vy = self.v.y + self.a.y #Speed y component
-        self.x += Vx
-        self.y += Vy #Costant speed
+        Vx = self.v.x + self.a.x#I add the acceleration to to speed
+        Vy = self.v.y + self.a.y
+        
+        self.x += Vx #Update the motion
+        self.y += Vy 
         
         self.a.set(0, 0, 0)#reset acceleration
         
