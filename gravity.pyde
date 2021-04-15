@@ -1,10 +1,10 @@
 #MAIN --> simulation of a particles system influenced by gravity and temperatures
 from particle import Particle
 
-num_particles = 10
+num_particles = 20
 particle_array = []
 
-show = False #To show the distance with particles that are interacting
+show = False #To show the distance with particles that are interacting (LATER)
 
 def setup():
     size(1000, 600)
