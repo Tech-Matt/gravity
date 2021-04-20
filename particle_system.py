@@ -18,8 +18,11 @@ class Particle_System():
             part.display()
             
     def interactions(self, show):
-        for part in self.particle_array:
-            part.check_interactions()
+        for i in range(len(self.particle_array)):
+            part_array = [elem for elem in self.particle_array if elem != self.particle_array[i]]
+            for j in range(len(part_array)):
+                self.particle_array[i].check_interaction(part_array[j], show)
+        
     
     def update_system(self):
         for part in self.particle_array:
