@@ -5,7 +5,7 @@ from particle_system import Particle_System
 num_particles = 20
 system = Particle_System(num_particles)
 
-show = True #To show the distance with particles that are interacting (LATER)
+show = False #To show the distance with particles that are interacting (LATER)
 
 def setup():
     size(1000, 600)

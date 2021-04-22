@@ -2,17 +2,20 @@ screen_width = 1000
 screen_height = 600
 
 mass_min = 10 #minimum mass
-mass_max = 50 #maximum mass
+mass_max = 500 #maximum mass
+
 thickness_min = 2
 thickness_max = 15
 
-G = 1  #Gravitational constant (I will tweak the original value to suit my needs)
+G = 0.2  #Gravitational constant (I will tweak the original value to suit my needs)
 
 class Particle():
-    def __init__(self):
-        self.pos = PVector(random(screen_width),random(screen_height), 0)
+    def __init__(self, mass=int(random(mass_min, mass_max)), x=random(screen_width), y=random(screen_height)):
+        self.x = x
+        self.y = y
+        self.pos = PVector(self.x,self.y, 0)
         self.temp = 0 #Temperature of the particle, temperature will also influence the color of the particle
-        self.mass = int(random(mass_min, mass_max)) 
+        self.mass = mass
         self.v = PVector(0, 0, 0) #The particle will have a random velocity
         self.a = PVector(0, 0, 0) #Resulting acceleration due to gravity interactions
         
@@ -33,13 +36,17 @@ class Particle():
             stroke(110);
             line(self.pos.x, self.pos.y, p2.pos.x, p2.pos.y) #Line to visualize the distance of the interactions
             
-        #I now cut out all the interactions with r < 1 or r > 200 because they are not relevant
+        #I now cut out all the interactions with r < 3 or r > 200 because they are not relevant
         #or cause problems
-        if r < 200 and r > 1:
+        if r < 200 and r > 3:
             strength = (G * self.mass * p2.mass) / (r * r)
             direction.setMag(strength)
             acc = PVector.div(direction, self.mass) #Acceleration
             self.a.add(acc)#Updating acceleration
+            
+        elif r < 3: #Collision
+            return p2 #Notify particle system to delete this two particles and add another one
+            
         
     def update(self):#Update the particle movement
         self.v.add(self.a) #Updating velocity
