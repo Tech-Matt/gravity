@@ -2,7 +2,7 @@
 from particle import Particle
 from particle_system import Particle_System
 
-num_particles = 20
+num_particles = 10
 system = Particle_System(num_particles)
 
 show = False #To show the distance with particles that are interacting (LATER)

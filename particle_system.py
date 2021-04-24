@@ -21,13 +21,19 @@ class Particle_System():
         collision = [] #its purpose is to store which pair of particles have collided ([[p1, p2], [p3, p4]])
         num = 0 #Counter to see if there are collisions
         
+        #INTERACTIONS or COLLISIONS
         for i in range(len(self.particle_array)):
+            #Array to not comparing the same particle to itself
             part_array = [elem for elem in self.particle_array if elem != self.particle_array[i]]
             for j in range(len(part_array)):
+                #COLLISION BETWEEN 2 PARTICLES
                 if (self.particle_array[i].check_interaction(part_array[j], show) != None):#case of collision
                     p2 = self.particle_array[i].check_interaction(part_array[j], show)#Instance of p2
-                    collision.append([self.particle_array[i], p2])#Add to an array to control it later
-                    num += 1
+                    #Control if the particles are already in the array
+                    if not ((p2 in collision) or (self.particle_array[i] in collision)):
+                        collision.append([self.particle_array[i], p2])#Add to an array to control it later
+                        num += 1
+                #common distant interaction
                 else:
                     self.particle_array[i].check_interaction(part_array[j], show) #Simply calculate interactions
                     
@@ -41,7 +47,7 @@ class Particle_System():
                 
                 x1 = p1.x
                 y1 = p1.y
-            
+                
                 self.particle_array.remove(p1)
                 self.particle_array.remove(p2)
                 
